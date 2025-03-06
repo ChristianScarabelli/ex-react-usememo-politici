@@ -16,6 +16,7 @@ function App() {
     try {
       const response = await fetch('https://boolean-spec-frontend.vercel.app/freetestapi/politicians')
       const data = await response.json()
+      console.log(data)
       setPoliticians(data)
     }
     catch (error) {
@@ -26,13 +27,14 @@ function App() {
   // Lista filtrata derivata dallo stato senza modificarlo direttamente
   const filteredPoliticians = politicians.filter(p =>
     p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    p.biography.toLowerCase().includes(searchTerm.toLowerCase())
+    p.biography.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    p.position.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
 
   return (
     <>
-      <section className="bg-blue-500">
+      <section className="bg-blue-500 h-screen">
         <div className="container mx-auto px-2">
           <h1 className="py-4 text-center text-gray-200 font-bold text-4xl mb-5">Politicians</h1>
           <div className="mb-5">
@@ -43,7 +45,7 @@ function App() {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          <div className="grid lg:grid-cols-6 md:grid-cols-4 sm: grid-cols-2 gap-5">
+          <div className="grid lg:grid-cols-6 md:grid-cols-4 sm: grid-cols-2 gap-5 pb-5">
             {filteredPoliticians.map((p) => {
               return <Card key={p.id} data={p} />
             })

@@ -1,8 +1,11 @@
+import { memo } from 'react'
 import Placeholder from '../assets/placeholder.jpg'
 
-export default function Card({ data }) {
+function Card({ data }) {
 
     const { name, image, position, biography, dob } = data
+
+    console.log(`Rendering card for ${name}`)
 
     return (
         <div className="bg-gray-300 rounded-lg p-4 flex flex-col gap-2">
@@ -18,3 +21,5 @@ export default function Card({ data }) {
         </div>
     )
 }
+
+export default memo(Card)

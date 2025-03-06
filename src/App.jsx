@@ -5,6 +5,9 @@ function App() {
 
   const [politicians, setPoliticians] = useState([])
 
+  // Stato per il termine di ricerca
+  const [searchTerm, setSearchTerm] = useState('')
+
   useEffect(() => {
     fetchPoliticians()
   }, [])
@@ -20,17 +23,30 @@ function App() {
     }
   }
 
+  // Lista filtrata derivata dallo stato senza modificarlo direttamente
+  const filteredPoliticians = politicians.filter(p =>
+    p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    p.biography.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+
 
   return (
     <>
       <section className="bg-blue-500">
-        <div className="container mx-auto">
-          <h1 className="py-4 text-center text-gray-200 font-bold text-4xl">Politicians</h1>
-          <div className="grid grid-cols-6 gap-5">
-            {politicians &&
-              politicians.map((p) => {
-                return <Card key={p.id} data={p} />
-              })
+        <div className="container mx-auto px-2">
+          <h1 className="py-4 text-center text-gray-200 font-bold text-4xl mb-5">Politicians</h1>
+          <div className="mb-5">
+            <input
+              type="text"
+              placeholder="Search politicians..."
+              className="w-50% px-4 py-2 text-gray-700 rounded-md bg-gray-300"
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+          <div className="grid lg:grid-cols-6 md:grid-cols-4 sm: grid-cols-2 gap-5">
+            {filteredPoliticians.map((p) => {
+              return <Card key={p.id} data={p} />
+            })
             }
           </div>
         </div>

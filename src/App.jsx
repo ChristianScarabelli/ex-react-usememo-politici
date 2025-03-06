@@ -1,5 +1,5 @@
 import Card from "./components/Card.jsx"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 
 function App() {
 
@@ -25,11 +25,15 @@ function App() {
   }
 
   // Lista filtrata derivata dallo stato senza modificarlo direttamente
-  const filteredPoliticians = politicians.filter(p =>
-    p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    p.biography.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    p.position.toLowerCase().includes(searchTerm.toLowerCase())
-  )
+  const filteredPoliticians = useMemo(() => {
+    return politicians.filter(p => {
+      const isInName = p.name.toLowerCase().includes(searchTerm.toLowerCase())
+      const isInBio = p.biography.toLowerCase().includes(searchTerm.toLowerCase())
+      const isInPos = p.position.toLowerCase().includes(searchTerm.toLowerCase())
+      return isInName || isInBio || isInPos
+    }
+    )
+  }, [politicians, searchTerm])
 
 
   return (
@@ -42,6 +46,7 @@ function App() {
               type="text"
               placeholder="Search politicians..."
               className="w-50% px-4 py-2 text-gray-700 rounded-md bg-gray-300"
+              value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>

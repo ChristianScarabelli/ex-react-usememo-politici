@@ -34,7 +34,7 @@ function App() {
 
   return (
     <>
-      <section className="bg-blue-500 h-screen">
+      <section className="bg-blue-500 min-h-screen">
         <div className="container mx-auto px-2">
           <h1 className="py-4 text-center text-gray-200 font-bold text-4xl mb-5">Politicians</h1>
           <div className="mb-5">
